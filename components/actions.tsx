@@ -15,6 +15,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { ConfirmModal } from '@/components/confirm-modal';
+import { Button } from '@/components/ui/button';
 
 interface ActionsProps {
     children: React.ReactNode;
@@ -61,13 +63,20 @@ export const Actions = ({
                     <Link2 className="mr-2 h-4 w-4" />
                     Copy board link
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                    onClick={onDelete}
-                    className="cursor-pointer p-3"
+                <ConfirmModal
+                    header="Delete board?"
+                    description="This will delete the board and all of its contents."
+                    disabled={pending}
+                    onConfirm={onDelete}
                 >
-                    <Trash className="mr-2 h-4 w-4" />
-                    Delete
-                </DropdownMenuItem>
+                    <Button
+                        className="w-full cursor-pointer justify-start p-3 text-sm font-normal"
+                        variant="ghost"
+                    >
+                        <Trash className="mr-2 h-4 w-4" />
+                        Delete
+                    </Button>
+                </ConfirmModal>
             </DropdownMenuContent>
         </DropdownMenu>
     );
