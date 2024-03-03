@@ -1,8 +1,11 @@
 'use client';
 
-import { Link2 } from 'lucide-react';
+import { Link2, Trash } from 'lucide-react';
 import { toast } from 'sonner';
 import { DropdownMenuContentProps } from '@radix-ui/react-dropdown-menu';
+
+import { useApiMutation } from '@/hooks/use-api-mutation';
+import { api } from '@/convex/_generated/api';
 
 import {
     DropdownMenu,
@@ -28,11 +31,19 @@ export const Actions = ({
     id,
     title,
 }: ActionsProps) => {
-    const opCopyLink = () => {
+    const { mutate, pending } = useApiMutation(api.board.remove);
+
+    const onCopyLink = () => {
         navigator.clipboard
             .writeText(`${window.location.origin}/board/${id}`)
             .then(() => toast.success('Link copied'))
             .catch(() => toast.error('Failed to copy link'));
+    };
+
+    const onDelete = () => {
+        mutate({ id })
+            .then(() => toast.success('Board deleted'))
+            .catch(() => toast.error('Failed to delete board'));
     };
     return (
         <DropdownMenu>
@@ -44,11 +55,18 @@ export const Actions = ({
                 className="w-60"
             >
                 <DropdownMenuItem
-                    onClick={opCopyLink}
+                    onClick={onCopyLink}
                     className="cursor-pointer p-3"
                 >
                     <Link2 className="mr-2 h-4 w-4" />
                     Copy board link
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={onDelete}
+                    className="cursor-pointer p-3"
+                >
+                    <Trash className="mr-2 h-4 w-4" />
+                    Delete
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
