@@ -187,7 +187,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         [canvasState],
     );
 
-    const onResizeHandlePointDown = useCallback(
+    const onResizeHandlePointerDown = useCallback(
         (corner: Side, initialBounds: XYWH) => {
             history.pause();
             setCanvasState({
@@ -338,8 +338,8 @@ export const Canvas = ({ boardId }: CanvasProps) => {
                 onWheel={onWheel}
                 onPointerMove={onPointerMove}
                 onPointerLeave={onPointerLeave}
-                onPointerUp={onPointerUp}
                 onPointerDown={onPointerDown}
+                onPointerUp={onPointerUp}
             >
                 <g
                     style={{
@@ -355,7 +355,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
                         />
                     ))}
                     <SelectionBox
-                        onResizeHandlerPointerDown={onResizeHandlePointDown}
+                        onResizeHandlePointerDown={onResizeHandlePointerDown}
                     />
                     {canvasState.mode === CanvasMode.SelectionNet &&
                         canvasState.current != null && (
