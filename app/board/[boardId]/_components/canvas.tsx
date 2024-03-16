@@ -31,6 +31,7 @@ import {
     pointerEventToCanvasPoint,
     resizeBounds,
 } from '@/lib/utils';
+import { useDisableScrollBounce } from '@/hooks/use-disable-scroll-bounce';
 
 import { Info } from './info';
 import { Participants } from './participants';
@@ -61,6 +62,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         b: 0,
     });
 
+    useDisableScrollBounce();
     const history = useHistory();
     const canUndo = useCanUndo();
     const canRedo = useCanRedo();
